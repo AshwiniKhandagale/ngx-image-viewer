@@ -3,9 +3,9 @@
   <img [src]="src[index]" [ngStyle]="style" alt="Image not found..." (dragstart)="onDragStart($event)" (load)="onLoad()" (loadstart)="onLoadStart()"/>
   <!-- Div below will be used to hide the 'ghost' image when dragging -->
   <div></div>
-  <!-- <div class="spinner-container" *ngIf="loading">
+  <div class="spinner-container" *ngIf="loading">
     <div class="spinner"></div>
-  </div> -->
+  </div>
 
   <button type="button" [class]="config.btnClass" *ngIf="config.btnShow.rotateCounterClockwise" (click)="rotateCounterClockwise()">
     <span [class]="config.btnIcons.rotateCounterClockwise"></span>

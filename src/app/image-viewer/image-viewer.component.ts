@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Optional, Inject, Output, EventEmitter, HostListener} from '@angular/core';
+import {Component, OnInit, Input, Optional, Inject, Output, EventEmitter, HostListener,ChangeDetectorRef} from '@angular/core';
 import { ImageViewerConfig, CustomEvent } from './image-viewer-config.model';
 
 const DEFAULT_CONFIG: ImageViewerConfig = {
@@ -63,7 +63,9 @@ export class ImageViewerComponent implements OnInit {
   private prevY: number;
   private hovered = false;
 
-  constructor( @Optional() @Inject('config') public moduleConfig: ImageViewerConfig) { }
+  constructor( @Optional() @Inject('config') public moduleConfig: ImageViewerConfig,
+  private cd: ChangeDetectorRef,
+  ) { }
 
   ngOnInit() {
     const merged = this.mergeConfig(DEFAULT_CONFIG, this.moduleConfig);
@@ -94,6 +96,7 @@ export class ImageViewerComponent implements OnInit {
   zoomIn() {
     this.scale *= (1 + this.config.zoomFactor);
     this.updateStyle();
+    this.cd.detectChanges();
   }
 
   zoomOut() {
@@ -101,6 +104,7 @@ export class ImageViewerComponent implements OnInit {
       this.scale /= (1 + this.config.zoomFactor);
     }
     this.updateStyle();
+    this.cd.detectChanges();
   }
 
   scrollZoom(evt) {
@@ -113,15 +117,18 @@ export class ImageViewerComponent implements OnInit {
   rotateClockwise() {
     this.rotation += 90;
     this.updateStyle();
+    this.cd.detectChanges();
   }
 
   rotateCounterClockwise() {
     this.rotation -= 90;
     this.updateStyle();
+    this.cd.detectChanges();
   }
 
   onLoad() {
     this.loading = false;
+    this.cd.detectChanges();
   }
 
   onLoadStart() {
